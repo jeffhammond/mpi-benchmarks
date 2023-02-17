@@ -70,12 +70,12 @@ include */Makefile.*.mk
 BINARY:=imb
 endif
 
-ifeq ($(origin CC),default)
-CC=mpiicc
-endif
-ifeq ($(origin CXX),default)
-CXX=mpiicpc
-endif
+
+MUK=$(HOME)/mukautuva
+CC=gcc -fPIC -g3 -I$(MUK)
+CXX=g++ -fPIC -g3 -I$(MUK)
+LDFLAGS=-L$(MUK) -Wl,-rpath=$(MUK) -lmuk
+
 override CPPFLAGS += -I.
 override CFLAGS += -g -O0 -Wall -Wno-long-long
 override CXXFLAGS += -g -O0 -Wall -Wextra -pedantic -Wno-long-long

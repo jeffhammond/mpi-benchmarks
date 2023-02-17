@@ -47,9 +47,10 @@
 #
 #  ***************************************************************************
 
-ifeq ($(origin CC),default)
-CC=mpicc
-endif
+MUK=$(HOME)/mukautuva
+CC=gcc -fPIC -g3 -I$(MUK)
+CXX=g++ -fPIC -g3 -I$(MUK)
+LDFLAGS=-L$(MUK) -Wl,-rpath=$(MUK) -lmuk
 
 BINARY=IMB-$(TARGET)
 BUILDDIR=build_$(TARGET)
@@ -106,7 +107,7 @@ $(BUILDDIR):
 	-mkdir -p $@
 
 $(BINARY): $(OBJ)
-	$(CC) $(LDFLAGS) $^ -o $@
+	$(CC) $^ $(LDFLAGS) -o $@
 
 $(BUILDDIR)/%.o: %.c
 	$(CC) $(CFLAGS) -D$(TARGET) -DIMB2018 -c $< -o $@
